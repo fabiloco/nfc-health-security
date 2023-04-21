@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  email      String    @unique
+  password   String
+  person     person[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime? @db.Timestamp(0)
+}
+
+model person {
+  id             BigInt                 @id @default(autoincrement()) @db.UnsignedBigInt
+  dni            String                 @unique
+  name           String
+  lastname       String?
+  phone          String?
+  ocupation      String?
+  sex            person_sex?
+  marital_status person_marital_status?
+  address        String?
+  blood_type     String?
+  height         String?
+  religion       String?
+  education      String?
+  sisben         String?
+  estrato        String?
+  birthday       DateTime?              @db.Timestamp(0)
+  deleted_at     DateTime?              @db.Timestamp(0)
+  allergies      person_allergies[]
+  appointment    appointment[]
+  contacts       contact[]
+  doctors        doctor[]
+  user           user                   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_id        BigInt                 @db.UnsignedBigInt
+  conditions     condition[]
+  medications    medication[]
+  created_at     DateTime               @default(now())
+  updated_at     DateTime               @updatedAt
+}
+
+model allergies {
+  id               BigInt             @id @default(autoincrement()) @db.UnsignedBigInt
+  name             String
+  description      String             @db.LongText
+  person_allergies person_allergies[]
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+}
+
+model condition {
+  id             BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  name           String
+  description    String   @db.LongText
+  diagnosis_date DateTime
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  person         person?  @relation(fields: [personId], references: [id])
+  personId       BigInt?  @db.UnsignedBigInt
+}
+
+model medication {
+  id          BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  name        String
+  description String   @db.LongText
+  reason      String   @db.LongText
+  dosage      String
+  frecuency   String
+  start_date  DateTime
+  end_date    DateTime
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  person      person?  @relation(fields: [personId], references: [id])
+  personId    BigInt?  @db.UnsignedBigInt
+}
+
+model person_allergies {
+  id           BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  description  String?   @db.LongText
+  allergies    allergies @relation(fields: [allergies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  allergies_id BigInt    @db.UnsignedBigInt
+  person       person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  person_id    BigInt    @db.UnsignedBigInt
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+}
+
+model appointment {
+  id          BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+  start_day   DateTime?            @db.Timestamp(0)
+  reason      String               @db.Text
+  description String               @db.LongText
+  hospital    String
+  address     String
+  severity    String
+  city        String
+  person      person               @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  person_id   BigInt               @db.UnsignedBigInt
+  doctor      doctor_appointment[]
+  created_at  DateTime             @default(now())
+  updated_at  DateTime             @updatedAt
+}
+
+model doctor_appointment {
+  id             BigInt      @id @default(autoincrement()) @db.UnsignedBigInt
+  appointment    appointment @relation(fields: [appointment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  appointment_id BigInt      @db.UnsignedBigInt
+  doctor         doctor      @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  doctor_id      BigInt      @db.UnsignedBigInt
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+}
+
+model contact {
+  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  contact_id BigInt    @db.UnsignedBigInt
+  person     person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  person_id  BigInt    @db.UnsignedBigInt
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime? @db.Timestamp(0)
+}
+
+model doctor_urgency {
+  id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  urgencias_id BigInt   @db.UnsignedBigInt
+  doctor_id    BigInt   @db.UnsignedBigInt
+  doctors      doctor   @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  urgencias    urgency  @relation(fields: [urgencias_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+}
+
+model doctor {
+  id                   BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+  professional_license String
+  recidency_hospital   String
+  specialty            String
+  citas_doctor         doctor_appointment[]
+  doctor_urgency       doctor_urgency[]
+
+  person    person @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  person_id BigInt @db.UnsignedBigInt
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model urgency {
+  id               BigInt           @id @default(autoincrement()) @db.UnsignedBigInt
+  start_day        DateTime?        @db.Timestamp(0)
+  end_day          DateTime?        @db.Timestamp(0)
+  reason           String           @db.Text
+  description      String           @db.LongText
+  hospital         String
+  address          String
+  severity         String
+  city             String
+  person_id        BigInt           @db.UnsignedBigInt
+  created_at       DateTime         @default(now())
+  updated_at       DateTime         @updatedAt
+  doctor_urgencias doctor_urgency[]
+}
+
+enum person_sex {
+  M
+  F
+}
+
+enum person_marital_status {
+  S
+  C
+  D
+  V
+}
