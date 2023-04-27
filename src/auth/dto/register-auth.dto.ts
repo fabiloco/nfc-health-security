@@ -1,15 +1,13 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { createZodDto } from 'nestjs-zod';
 
-import { IsNotEmpty, IsString } from 'class-validator';
+import { z } from 'zod';
 
-import { LoginAuthDto } from './login-auth.dto';
+const registerSchema = z.object({
+  name: z.string(),
+  dni: z.string(),
+  password: z.string(),
+  email: z.string(),
+});
 
-export class RegisterAuthDto extends PartialType(LoginAuthDto) {
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
-  @IsString()
-  @IsNotEmpty()
-  dni: string;
-}
+// class is required for using DTO as a type
+export class RegisterAuthDto extends createZodDto(registerSchema) {}
