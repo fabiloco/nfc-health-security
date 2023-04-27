@@ -8,7 +8,7 @@ datasource db {
 }
 
 model user {
-  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  id         Int       @id @default(autoincrement())
   email      String    @unique
   password   String
   person     person[]
@@ -18,7 +18,7 @@ model user {
 }
 
 model person {
-  id             BigInt                 @id @default(autoincrement()) @db.UnsignedBigInt
+  id             Int                    @id @default(autoincrement())
   dni            String                 @unique
   name           String
   lastname       String?
@@ -40,7 +40,7 @@ model person {
   contacts       contact[]
   doctors        doctor[]
   user           user                   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user_id        BigInt                 @db.UnsignedBigInt
+  user_id        Int
   conditions     condition[]
   medications    medication[]
   created_at     DateTime               @default(now())
@@ -48,7 +48,7 @@ model person {
 }
 
 model allergies {
-  id               BigInt             @id @default(autoincrement()) @db.UnsignedBigInt
+  id               Int                @id @default(autoincrement())
   name             String
   description      String             @db.LongText
   person_allergies person_allergies[]
@@ -57,18 +57,18 @@ model allergies {
 }
 
 model condition {
-  id             BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  id             Int      @id @default(autoincrement())
   name           String
   description    String   @db.LongText
   diagnosis_date DateTime
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
   person         person?  @relation(fields: [personId], references: [id])
-  personId       BigInt?  @db.UnsignedBigInt
+  personId       Int?
 }
 
 model medication {
-  id          BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  id          Int      @id @default(autoincrement())
   name        String
   description String   @db.LongText
   reason      String   @db.LongText
@@ -79,22 +79,22 @@ model medication {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   person      person?  @relation(fields: [personId], references: [id])
-  personId    BigInt?  @db.UnsignedBigInt
+  personId    Int?
 }
 
 model person_allergies {
-  id           BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  id           Int       @id @default(autoincrement())
   description  String?   @db.LongText
   allergies    allergies @relation(fields: [allergies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  allergies_id BigInt    @db.UnsignedBigInt
+  allergies_id Int
   person       person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id    BigInt    @db.UnsignedBigInt
+  person_id    Int
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
 }
 
 model appointment {
-  id          BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+  id          Int                  @id @default(autoincrement())
   start_day   DateTime?            @db.Timestamp(0)
   reason      String               @db.Text
   description String               @db.LongText
@@ -103,36 +103,36 @@ model appointment {
   severity    String
   city        String
   person      person               @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id   BigInt               @db.UnsignedBigInt
+  person_id   Int
   doctor      doctor_appointment[]
   created_at  DateTime             @default(now())
   updated_at  DateTime             @updatedAt
 }
 
 model doctor_appointment {
-  id             BigInt      @id @default(autoincrement()) @db.UnsignedBigInt
+  id             Int         @id @default(autoincrement())
   appointment    appointment @relation(fields: [appointment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  appointment_id BigInt      @db.UnsignedBigInt
+  appointment_id Int
   doctor         doctor      @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  doctor_id      BigInt      @db.UnsignedBigInt
+  doctor_id      Int
   created_at     DateTime    @default(now())
   updated_at     DateTime    @updatedAt
 }
 
 model contact {
-  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
-  contact_id BigInt    @db.UnsignedBigInt
+  id         Int       @id @default(autoincrement())
+  contact_id Int
   person     person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id  BigInt    @db.UnsignedBigInt
+  person_id  Int
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   deleted_at DateTime? @db.Timestamp(0)
 }
 
 model doctor_urgency {
-  id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
-  urgencias_id BigInt   @db.UnsignedBigInt
-  doctor_id    BigInt   @db.UnsignedBigInt
+  id           Int      @id @default(autoincrement())
+  urgencias_id Int
+  doctor_id    Int
   doctors      doctor   @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   urgencias    urgency  @relation(fields: [urgencias_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   created_at   DateTime @default(now())
@@ -140,7 +140,7 @@ model doctor_urgency {
 }
 
 model doctor {
-  id                   BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+  id                   Int                  @id @default(autoincrement())
   professional_license String
   recidency_hospital   String
   specialty            String
@@ -148,14 +148,14 @@ model doctor {
   doctor_urgency       doctor_urgency[]
 
   person    person @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id BigInt @db.UnsignedBigInt
+  person_id Int
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
 
 model urgency {
-  id               BigInt           @id @default(autoincrement()) @db.UnsignedBigInt
+  id               Int              @id @default(autoincrement())
   start_day        DateTime?        @db.Timestamp(0)
   end_day          DateTime?        @db.Timestamp(0)
   reason           String           @db.Text
@@ -164,7 +164,7 @@ model urgency {
   address          String
   severity         String
   city             String
-  person_id        BigInt           @db.UnsignedBigInt
+  person_id        Int
   created_at       DateTime         @default(now())
   updated_at       DateTime         @updatedAt
   doctor_urgencias doctor_urgency[]
