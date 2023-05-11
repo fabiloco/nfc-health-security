@@ -1,0 +1,2 @@
+GET http://localhost:3000/auth/test
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgzNzc0NTA0LCJleHAiOjE2ODM4NDY1MDR9.7mArnZDsmTcZWxvLvM88sIaldyAxxO3-TPLUTrpnIg4
