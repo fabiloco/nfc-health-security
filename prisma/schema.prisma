@@ -15,6 +15,13 @@ model user {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   deleted_at DateTime? @db.Timestamp(0)
+  role       role      @default(PATIENT)
+}
+
+enum role {
+  ADMIN
+  PATIENT
+  DOCTOR
 }
 
 model person {

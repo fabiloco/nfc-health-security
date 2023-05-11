@@ -78,6 +78,7 @@ export class AuthService {
       user: {
         id: userWithEmail.id,
         email: userWithEmail.email,
+        role: userWithEmail.role,
         created_at: userWithEmail.created_at,
         updated_at: userWithEmail.updated_at,
       },
