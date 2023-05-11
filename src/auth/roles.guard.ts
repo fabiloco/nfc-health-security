@@ -1,27 +1,40 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
+import { UserService } from 'src/user/user.service';
 import { Role } from './role.enum';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector, private userService: UserService) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    console.log('roles guard');
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>('roles', [
       context.getHandler(),
       context.getClass(),
     ]);
 
-    const { user } = context.switchToHttp().getRequest();
-
-    console.log(user);
-
     if (!requiredRoles) {
       return true;
+    }
+    const { user } = context.switchToHttp().getRequest();
+
+    const userWithId = await this.userService.findOne(user.id);
+
+    if (!userWithId) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    if (!requiredRoles.includes(userWithId.role as Role)) {
+      throw new HttpException(
+        `User doesn't have enough permissions`,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     return true;
