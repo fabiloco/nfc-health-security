@@ -5,8 +5,11 @@ import { ZodValidationPipe } from 'nestjs-zod';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { RolesGuard } from './auth/roles.guard';
+import { PrismaService } from './prisma.service';
 import { UserModule } from './user/user.module';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [
@@ -19,15 +22,21 @@ import { UserModule } from './user/user.module';
   ],
   controllers: [AppController],
   providers: [
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: RolesGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
     {
       provide: APP_PIPE,
       useClass: ZodValidationPipe,
     },
     AppService,
+    PrismaService,
+    UserService,
   ],
 })
 export class AppModule {}
