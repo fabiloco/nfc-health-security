@@ -1,2 +1,5 @@
-GET http://localhost:3000/user
+DELETE http://localhost:3000/user/2
+Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNjgzOTA0NTQ0LCJleHAiOjE2ODM5NzY1NDR9.07bpBYI7_dGgfoDaFJyZHmiM5ZlBcs6gE1la9GNMymQ
+
+

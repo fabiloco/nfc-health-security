@@ -10,6 +10,7 @@ import { RolesGuard } from './auth/roles.guard';
 import { PrismaService } from './prisma.service';
 import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
+import { PersonModule } from './person/person.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserService } from './user/user.service';
       envFilePath: process.env.NODE_ENV === 'prod' ? '.env.prod' : '.env.dev',
       isGlobal: true,
     }),
+    PersonModule,
   ],
   controllers: [AppController],
   providers: [

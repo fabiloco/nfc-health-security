@@ -9,6 +9,15 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     const { email, password, role } = createUserDto;
+
+    const userWithEmail = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (userWithEmail) {
+      throw new HttpException('Email already used', HttpStatus.FORBIDDEN);
+    }
+
     const user = await this.prisma.user.create({
       data: {
         email,
@@ -33,6 +42,21 @@ export class UserService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const { email, password, role } = updateUserDto;
+
+    const userWithId = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!userWithId) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    const userWithEmail = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (userWithEmail) {
+      throw new HttpException('Email already used', HttpStatus.FORBIDDEN);
+    }
+
     const user = await this.prisma.user.update({
       where: { id },
       data: {
@@ -45,6 +69,12 @@ export class UserService {
   }
 
   async remove(id: number) {
+    const userWithId = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!userWithId) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
     const user = await this.prisma.user.delete({ where: { id } });
 
     if (!user) {

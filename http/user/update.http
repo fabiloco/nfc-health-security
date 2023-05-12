@@ -3,6 +3,6 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgzODY1MTQzLCJleHAiOjE2ODM5MzcxNDN9.uUsBYS9BSjeduqrYtxOWhb_BWC-kwLOig4j-_sm3Yus
 
 {
-  "email": "testupdate@hotmail.com",
+  "email": "testt@hotmail.com",
   "role": "ADMIN"
 }

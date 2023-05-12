@@ -1,0 +1,10 @@
+PATCH http://localhost:3000/person/1
+Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgzODY1MTQzLCJleHAiOjE2ODM5MzcxNDN9.uUsBYS9BSjeduqrYtxOWhb_BWC-kwLOig4j-_sm3Yus
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgzOTI4MzQwLCJleHAiOjE2ODQwMDAzNDB9.qXgti88kJXAp_IPiRDK5mfqkfBYngiAZkBd8QucP0FU
+
+{
+  "lastname": "sánchez",
+  "phone": "3001231212",
+  "sex": "F"
+}
