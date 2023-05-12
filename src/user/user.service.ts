@@ -8,8 +8,15 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    // TODO
-    return 'This action adds a new user';
+    const { email, password, role } = createUserDto;
+    const user = await this.prisma.user.create({
+      data: {
+        email,
+        role,
+        password,
+      },
+    });
+    return user;
   }
 
   async findAll() {
@@ -25,8 +32,16 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    // TODO
-    return `This action updates a #${id} user`;
+    const { email, password, role } = updateUserDto;
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: {
+        email,
+        role,
+        password,
+      },
+    });
+    return user;
   }
 
   async remove(id: number) {

@@ -1,4 +1,12 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateUserDto } from './create-user.dto';
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'nestjs-zod/z';
+import { Role } from 'src/auth/role.enum';
 
-export class UpdateUserDto extends PartialType(CreateUserDto) {}
+const updateUserSchema = z.object({
+  email: z.string().optional(),
+  password: z.string().optional(),
+  role: z.nativeEnum(Role).optional(),
+});
+
+// class is required for using DTO as a type
+export class UpdateUserDto extends createZodDto(updateUserSchema) {}
