@@ -1,12 +1,12 @@
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
-#{
-#  "email": "admin@hotmail.com",
-#  "password": "admin"
-#}
-
 {
-  "email": "fabian@gmail.com",
-  "password": "fabian"
+  "email": "admin@hotmail.com",
+  "password": "admin"
 }
+
+#{
+#  "email": "sebastian@hotmail.com",
+#  "password": "sebastian"
+#}

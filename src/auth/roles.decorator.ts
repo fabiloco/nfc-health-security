@@ -3,4 +3,4 @@ import { Role } from './role.enum';
 
 export const Roles = (...roles: Role[]) => SetMetadata('roles', roles);
 export const RolesAndOwner = (...roles: Role[]) =>
-  SetMetadata('RolesAndOwner', roles);
+  SetMetadata('requiredRolesAndOwners', roles);

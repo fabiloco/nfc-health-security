@@ -20,33 +20,57 @@ export class RolesGuard implements CanActivate {
     ]);
 
     const requiredRolesAndOwners = this.reflector.getAllAndOverride<Role[]>(
-      'rolesAndOwners',
+      'requiredRolesAndOwners',
       [context.getHandler(), context.getClass()],
     );
 
-    if (!requiredRoles) {
+    console.log('requiredRolesAndOwners: ', requiredRolesAndOwners);
+
+    if (requiredRoles) {
+      const { user } = context.switchToHttp().getRequest();
+
+      const userWithId = await this.userService.findOne(user.id);
+
+      if (!userWithId) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+
+      if (!requiredRoles.includes(userWithId.role as Role)) {
+        throw new HttpException(
+          `User doesn't have enough permissions`,
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
+
+      return true;
+    } else if (requiredRolesAndOwners) {
+      const { user, params } = context.switchToHttp().getRequest();
+
+      const userWithId = await this.userService.findOne(user.id);
+
+      if (!userWithId) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+
+      // console.log(params.id == userWithId.id);
+      //
+      // console.log('userWithId: ', userWithId);
+      // console.log('user: ', user);
+
+      if (userWithId.id == params.id) {
+        return true;
+      }
+
+      if (!requiredRolesAndOwners.includes(userWithId.role as Role)) {
+        throw new HttpException(
+          `User doesn't have enough permissions`,
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
+
+      return true;
+    } else {
       return true;
     }
-
-    if (!requiredRolesAndOwners) {
-      return true;
-    }
-
-    const { user } = context.switchToHttp().getRequest();
-
-    const userWithId = await this.userService.findOne(user.id);
-
-    if (!userWithId) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-
-    if (!requiredRoles.includes(userWithId.role as Role)) {
-      throw new HttpException(
-        `User doesn't have enough permissions`,
-        HttpStatus.UNAUTHORIZED,
-      );
-    }
-
-    return true;
   }
 }

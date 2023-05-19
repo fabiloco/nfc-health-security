@@ -27,14 +27,20 @@ export class PersonService {
       marital_status,
     } = updatePersonDto;
 
-    const personWithId = await this.prisma.person.findUnique({ where: { id } });
+    console.log('id: ', id);
+
+    const personWithId = await this.prisma.person.findFirst({
+      where: { user: { id: id } },
+    });
+
+    console.log();
 
     if (!personWithId) {
       throw new HttpException('Person not found', HttpStatus.NOT_FOUND);
     }
 
     const person = await this.prisma.person.update({
-      where: { id },
+      where: { id: personWithId.id },
       data: {
         dni,
         sex,
