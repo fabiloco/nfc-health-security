@@ -27,13 +27,9 @@ export class PersonService {
       marital_status,
     } = updatePersonDto;
 
-    console.log('id: ', id);
-
     const personWithId = await this.prisma.person.findFirst({
       where: { user: { id: id } },
     });
-
-    console.log();
 
     if (!personWithId) {
       throw new HttpException('Person not found', HttpStatus.NOT_FOUND);

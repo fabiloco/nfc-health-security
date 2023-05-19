@@ -24,8 +24,6 @@ export class RolesGuard implements CanActivate {
       [context.getHandler(), context.getClass()],
     );
 
-    console.log('requiredRolesAndOwners: ', requiredRolesAndOwners);
-
     if (requiredRoles) {
       const { user } = context.switchToHttp().getRequest();
 
@@ -51,11 +49,6 @@ export class RolesGuard implements CanActivate {
       if (!userWithId) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
-
-      // console.log(params.id == userWithId.id);
-      //
-      // console.log('userWithId: ', userWithId);
-      // console.log('user: ', user);
 
       if (userWithId.id == params.id) {
         return true;
