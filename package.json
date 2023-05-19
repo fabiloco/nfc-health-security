@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "build:prod": "nest build && yarn prisma generate && yarn prisma migrate",
+    "build:prod": "nest build && yarn prisma generate && yarn prisma migrate dev",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "migrate:mysql": "dotenv -e .env.dev -- yarn prisma migrate dev",
     "push:mysql": "dotenv -e .env.dev -- yarn prisma db push dev",
