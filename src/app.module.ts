@@ -17,7 +17,7 @@ import { PersonModule } from './person/person.module';
     AuthModule,
     UserModule,
     ConfigModule.forRoot({
-      envFilePath: process.env.NODE_ENV === 'prod' ? '.env.prod' : '.env.dev',
+      envFilePath: process.env.NODE_ENV === 'prod' ? '.env' : '.env.dev',
       isGlobal: true,
     }),
     PersonModule,

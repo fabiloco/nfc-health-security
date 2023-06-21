@@ -11,7 +11,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "migrate:mysql": "dotenv -e .env.dev -- yarn prisma migrate dev",
     "push:mysql": "dotenv -e .env.dev -- yarn prisma db push dev",
-    "start": "nest start",
+    "start": "NODE_ENV=prod nest start",
     "start:dev": "NODE_ENV=dev nest start --watch",
     "start:debug": "NODE_ENV=debug nest start --debug --watch",
     "start:prod": "NODE_ENV=prod node dist/main",
