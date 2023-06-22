@@ -7,6 +7,20 @@ import { UpdatePersonDto } from './dto/update-person.dto';
 export class PersonService {
   constructor(private prisma: PrismaService) {}
 
+  async findByUserId(userId: string) {
+    const person = await this.prisma.person.findFirst({
+      where: { user: { id: Number(userId) } },
+    });
+
+    if (!person) {
+      throw new HttpException(
+        'No person with such user id',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return person;
+  }
+
   async update(id: number, updatePersonDto: UpdatePersonDto) {
     const {
       dni,

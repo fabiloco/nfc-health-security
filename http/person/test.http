@@ -1,2 +1,4 @@
-GET http://localhost:3000/auth/test
+GET http://localhost:3000/person
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNjg3NDQyMDg0LCJleHAiOjE2ODc1MTQwODR9.amLtNN-QFg-bdOgbDgDxCUfUcZo_YKLVWgZyk3Eh3IE
+
+Content-Type: application/json

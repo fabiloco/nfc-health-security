@@ -12,6 +12,8 @@ import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { PersonModule } from './person/person.module';
 
+console.log(process.env.NODE_ENV);
+
 @Module({
   imports: [
     AuthModule,

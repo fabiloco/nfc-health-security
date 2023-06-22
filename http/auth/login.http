@@ -1,13 +1,13 @@
-# POST http://localhost:3000/auth/login
-POST https://nfc-health-securty-production.up.railway.app/auth/login
+POST http://localhost:3000/auth/login
+# POST https://nfc-health-securty-production.up.railway.app/auth/login
 Content-Type: application/json
 
-{
-  "email": "admin@hotmail.com",
-  "password": "admin"
-}
-
 #{
-#  "email": "sebastian@hotmail.com",
-#  "password": "sebastian"
+#  "email": "admin@hotmail.com",
+#  "password": "admin"
 #}
+
+{
+  "email": "sebastian@hotmail.com",
+  "password": "sebastian"
+}

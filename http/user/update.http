@@ -1,8 +1,8 @@
-PATCH http://localhost:3000/user/2
+PATCH http://localhost:3000/user/9
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjgzODY1MTQzLCJleHAiOjE2ODM5MzcxNDN9.uUsBYS9BSjeduqrYtxOWhb_BWC-kwLOig4j-_sm3Yus
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjg3Mzk4NzgzLCJleHAiOjE2ODc0NzA3ODN9.qj8wI9uncJWgeBriZYQtHABo-Z9FJVSZwfWVzmXwSLQ
 
 {
-  "email": "testt@hotmail.com",
-  "role": "ADMIN"
+  "email": "sebastian@hotmail.com",
+  "role": "PATIENT"
 }
