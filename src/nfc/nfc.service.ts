@@ -1,20 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from 'src/prisma.service';
 
 import { ReadNfcDto } from './dto/read-nfc.dto';
 import { RegisterNfcDto } from './dto/register-nfc.dto';
 
 @Injectable()
 export class NfcService {
-  constructor(private jwtService: JwtService) {}
+  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
-  async register(registerNfcDto: RegisterNfcDto) {
+  async register(userID: string, registerNfcDto: RegisterNfcDto) {
     const { nfc_uid, blockchain_hash } = registerNfcDto;
 
     const encrypted_payload = nfc_uid + '🐴' + blockchain_hash;
 
     const token = this.jwtService.sign({
       payload: encrypted_payload,
+    });
+
+    this.prisma.nfc.create({
+      data: {
+        token,
+        user_id: Number(userID),
+      },
     });
 
     return { payload: token };

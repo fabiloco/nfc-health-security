@@ -13,13 +13,13 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @ApiBearerAuth()
 @ApiTags('person')
 @Controller('nfc')
-@RolesAndOwner(Role.ADMIN)
+@RolesAndOwner(Role.DOCTOR, Role.ADMIN)
 export class NfcController {
   constructor(private readonly nfcService: NfcService) {}
 
   @Post('register/:id')
   register(@Param('id') id: string, @Body() registerNfcDto: RegisterNfcDto) {
-    return this.nfcService.register(registerNfcDto);
+    return this.nfcService.register(id, registerNfcDto);
   }
 
   @Post('read/:id')

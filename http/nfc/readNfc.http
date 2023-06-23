@@ -1,7 +1,7 @@
 POST http://localhost:3000/nfc/read/9
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjg3NDQyNzQ2LCJleHAiOjE2ODc1MTQ3NDZ9.2KALIOvosL3SUzx_YFBQ7VMmRlfTqEXHW3mZ8jThbus
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjg3NTM2MzM1LCJleHAiOjE2ODc2MDgzMzV9.AtB8xKCEdA1nN-L7rlP1ZYDGmW7cDtOIY20Lju6t3uA
 Content-Type: application/json
 
 {
-  "nfc_payload": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiMTIz8J-QtDMyMSIsImlhdCI6MTY4NzQ5NDI1NSwiZXhwIjoxNjg3NTY2MjU1fQ.FkHbhNYv-Q2fBeo4DHeQRoEDG52t68nt1TQCkfvJVxs"
+  "nfc_payload": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiMTIz8J-QtDMyMSIsImlhdCI6MTY4NzUzNjIxMiwiZXhwIjoxNjg3NjA4MjEyfQ.9ATIe1gfOIiqp5L-JzJ-EENnfA5JU4pOd6WxKObrIk0"
 }

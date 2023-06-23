@@ -16,6 +16,7 @@ model user {
   updated_at DateTime  @updatedAt
   deleted_at DateTime? @db.Timestamp(0)
   role       role      @default(PATIENT)
+  nfc        nfc[]
 }
 
 enum role {
@@ -52,6 +53,13 @@ model person {
   medications    medication[]
   created_at     DateTime               @default(now())
   updated_at     DateTime               @updatedAt
+}
+
+model nfc {
+  id      Int    @id @default(autoincrement())
+  token   String @db.LongText
+  user    user   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_id Int
 }
 
 model allergies {
