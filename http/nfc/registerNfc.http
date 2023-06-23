@@ -1,0 +1,8 @@
+POST http://localhost:3000/nfc/register/9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjg3NDQyNzQ2LCJleHAiOjE2ODc1MTQ3NDZ9.2KALIOvosL3SUzx_YFBQ7VMmRlfTqEXHW3mZ8jThbus
+Content-Type: application/json
+
+{
+  "nfc_uid": "123",
+  "blockchain_hash": "321"
+}

@@ -11,6 +11,7 @@ import { PrismaService } from './prisma.service';
 import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { PersonModule } from './person/person.module';
+import { NfcModule } from './nfc/nfc.module';
 
 console.log(process.env.NODE_ENV);
 
@@ -23,6 +24,7 @@ console.log(process.env.NODE_ENV);
       isGlobal: true,
     }),
     PersonModule,
+    NfcModule,
   ],
   controllers: [AppController],
   providers: [

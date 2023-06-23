@@ -4,7 +4,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PersonService } from './person.service';
 import { UpdatePersonDto } from './dto/update-person.dto';
 
-import { Roles, RolesAndOwner } from 'src/auth/roles.decorator';
+import { RolesAndOwner } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 
 @ApiBearerAuth()
