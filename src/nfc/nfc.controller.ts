@@ -11,7 +11,7 @@ import { Role } from 'src/auth/role.enum';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()
-@ApiTags('person')
+@ApiTags('nfc')
 @Controller('nfc')
 @RolesAndOwner(Role.DOCTOR, Role.ADMIN)
 export class NfcController {
