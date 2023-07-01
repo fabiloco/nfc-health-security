@@ -1,5 +1,5 @@
-POST http://localhost:3000/nfc/register/9
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjg3NTM2MjAxLCJleHAiOjE2ODc2MDgyMDF9.Wqv2ynrTrYmx3ov3MXQ45nlVs1x2Sn-BaA8JD-s_Rkk
+POST http://localhost:3000/nfc/register/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4MjM2MDQwLCJleHAiOjE2OTA4MjgwNDB9.1SMRDLF_oBOG7y0ENaa-zKyX7Ld5vhXS7anhMw4A2cM
 Content-Type: application/json
 
 {

@@ -1,9 +1,16 @@
 POST http://localhost:3000/auth/register
 Content-Type: application/json
 
+#{
+#  "dni": "123",
+#  "name": "sebastián",
+#  "email": "sebastian@hotmail.com",
+#  "password": "sebastian"
+#}
+
 {
-  "dni": "2",
-  "name": "sebastián",
-  "email": "sebastian@hotmail.com",
-  "password": "sebastian"
+  "dni": "1234",
+  "name": "Fabián",
+  "email": "fabian@hotmail.com",
+  "password": "fabian"
 }

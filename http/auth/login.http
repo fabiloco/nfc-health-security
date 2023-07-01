@@ -7,7 +7,12 @@ Content-Type: application/json
 #  "password": "admin"
 #}
 
+#{
+#  "email": "sebastian@hotmail.com",
+#  "password": "sebastian"
+#}
+
 {
-  "email": "sebastian@hotmail.com",
-  "password": "sebastian"
+  "email": "fabian@hotmail.com",
+  "password": "fabian"
 }
