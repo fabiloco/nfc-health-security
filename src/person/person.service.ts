@@ -10,6 +10,13 @@ export class PersonService {
   async findByUserId(userId: string) {
     const person = await this.prisma.person.findFirst({
       where: { user: { id: Number(userId) } },
+      include: {
+        appointments: true,
+        contacts: true,
+        allergies: true,
+        conditions: true,
+        medications: true,
+      },
     });
 
     if (!person) {
@@ -39,6 +46,7 @@ export class PersonService {
       ocupation,
       blood_type,
       marital_status,
+      allergies,
     } = updatePersonDto;
 
     const personWithId = await this.prisma.person.findFirst({
@@ -68,8 +76,19 @@ export class PersonService {
         ocupation,
         blood_type,
         marital_status,
+        allergies: {
+          set: allergies?.map((allergyId) => ({ id: allergyId })),
+        },
+      },
+      include: {
+        appointments: true,
+        contacts: true,
+        allergies: true,
+        conditions: true,
+        medications: true,
       },
     });
+
     return person;
   }
 }

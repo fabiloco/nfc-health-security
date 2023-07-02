@@ -11,7 +11,7 @@ model user {
   id         Int       @id @default(autoincrement())
   email      String    @unique
   password   String
-  person     person[]
+  person     person?
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   deleted_at DateTime? @db.Timestamp(0)
@@ -43,16 +43,27 @@ model person {
   estrato        String?
   birthday       DateTime?              @db.Timestamp(0)
   deleted_at     DateTime?              @db.Timestamp(0)
-  allergies      person_allergies[]
-  appointment    appointment[]
+  allergies      allergie[]
+  appointments   appointment[]
   contacts       contact[]
-  doctors        doctor[]
-  user           user                   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user_id        Int
   conditions     condition[]
   medications    medication[]
-  created_at     DateTime               @default(now())
-  updated_at     DateTime               @updatedAt
+
+  user    user @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_id Int  @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  doctor     doctor?
+}
+
+model contact {
+  id         Int       @id @default(autoincrement())
+  person     person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  person_id  Int
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime? @db.Timestamp(0)
 }
 
 model nfc {
@@ -62,13 +73,13 @@ model nfc {
   user_id Int
 }
 
-model allergies {
-  id               Int                @id @default(autoincrement())
-  name             String
-  description      String             @db.LongText
-  person_allergies person_allergies[]
-  created_at       DateTime           @default(now())
-  updated_at       DateTime           @updatedAt
+model allergie {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String   @db.LongText
+  persons     person[]
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }
 
 model condition {
@@ -78,12 +89,12 @@ model condition {
   diagnosis_date DateTime
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
-  person         person?  @relation(fields: [personId], references: [id])
-  personId       Int?
+  persons        person[]
 }
 
 model medication {
   id          Int      @id @default(autoincrement())
+  persons     person[]
   name        String
   description String   @db.LongText
   reason      String   @db.LongText
@@ -93,96 +104,54 @@ model medication {
   end_date    DateTime
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  person      person?  @relation(fields: [personId], references: [id])
-  personId    Int?
-}
-
-model person_allergies {
-  id           Int       @id @default(autoincrement())
-  description  String?   @db.LongText
-  allergies    allergies @relation(fields: [allergies_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  allergies_id Int
-  person       person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id    Int
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
 }
 
 model appointment {
-  id          Int                  @id @default(autoincrement())
-  start_day   DateTime?            @db.Timestamp(0)
-  reason      String               @db.Text
-  description String               @db.LongText
+  id          Int       @id @default(autoincrement())
+  start_day   DateTime? @db.Timestamp(0)
+  reason      String    @db.Text
+  description String    @db.LongText
   hospital    String
   address     String
   severity    String
   city        String
-  person      person               @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  person      person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   person_id   Int
-  doctor      doctor_appointment[]
-  created_at  DateTime             @default(now())
-  updated_at  DateTime             @updatedAt
-}
-
-model doctor_appointment {
-  id             Int         @id @default(autoincrement())
-  appointment    appointment @relation(fields: [appointment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  appointment_id Int
-  doctor         doctor      @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  doctor_id      Int
-  created_at     DateTime    @default(now())
-  updated_at     DateTime    @updatedAt
-}
-
-model contact {
-  id         Int       @id @default(autoincrement())
-  contact_id Int
-  person     person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id  Int
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  deleted_at DateTime? @db.Timestamp(0)
-}
-
-model doctor_urgency {
-  id           Int      @id @default(autoincrement())
-  urgencias_id Int
-  doctor_id    Int
-  doctors      doctor   @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  urgencias    urgency  @relation(fields: [urgencias_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  doctors     doctor[]
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
 }
 
 model doctor {
-  id                   Int                  @id @default(autoincrement())
+  id                   Int           @id @default(autoincrement())
   professional_license String
   recidency_hospital   String
   specialty            String
-  citas_doctor         doctor_appointment[]
-  doctor_urgency       doctor_urgency[]
+  appointments         appointment[]
+  urgencies            urgency[]
 
   person    person @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id Int
+  person_id Int    @unique
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
 
 model urgency {
-  id               Int              @id @default(autoincrement())
-  start_day        DateTime?        @db.Timestamp(0)
-  end_day          DateTime?        @db.Timestamp(0)
-  reason           String           @db.Text
-  description      String           @db.LongText
-  hospital         String
-  address          String
-  severity         String
-  city             String
-  person_id        Int
-  created_at       DateTime         @default(now())
-  updated_at       DateTime         @updatedAt
-  doctor_urgencias doctor_urgency[]
+  id          Int       @id @default(autoincrement())
+  start_day   DateTime? @db.Timestamp(0)
+  end_day     DateTime? @db.Timestamp(0)
+  reason      String    @db.Text
+  description String    @db.LongText
+  hospital    String
+  address     String
+  severity    String
+  city        String
+  person_id   Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  doctor      doctor?   @relation(fields: [doctorId], references: [id])
+  doctorId    Int?
 }
 
 enum person_sex {

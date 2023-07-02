@@ -1,10 +1,21 @@
-PATCH http://localhost:3000/person/9
-
+PATCH http://localhost:3000/person/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNjg3NDAxNzQ0LCJleHAiOjE2ODc0NzM3NDR9.EFK6wx6eREiSP3LO5HHCS0Nsu1_NbUNyEYC7B0xfjDQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4MjY3Mjk1LCJleHAiOjE2OTA4NTkyOTV9.QTm-Uv2r9N16grX_mNT_Zxlz4pLHAvjMDTVJSoniCe0
 
 {
   "lastname": "Ricardo",
   "phone": "3001231212",
-  "sex": "F"
+  "sex": "F",
+  "allergies": [2]
 }
+
+
+#"medications": [{
+#  "name": "pellosilina",
+#  "description": "para la pellosidad",
+#  "dosage": "50g",
+#  "reason": "exceso de pellosidad",
+#  "frecuency": "cada 2 horas",
+#  "end_date": "2023-07-02T12:52:11-05:00",
+#  "start_date": "2023-07-02T12:52:30-05:00"
+#}]

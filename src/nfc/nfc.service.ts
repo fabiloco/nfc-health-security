@@ -74,12 +74,11 @@ export class NfcService {
       include: {
         person: {
           include: {
-            doctors: true,
             allergies: true,
             contacts: true,
             conditions: true,
-            appointment: true,
             medications: true,
+            appointments: true,
           },
         },
       },

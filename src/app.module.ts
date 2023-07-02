@@ -12,6 +12,7 @@ import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { PersonModule } from './person/person.module';
 import { NfcModule } from './nfc/nfc.module';
+import { AllergyModule } from './allergy/allergy.module';
 
 console.log(process.env.NODE_ENV);
 
@@ -25,6 +26,7 @@ console.log(process.env.NODE_ENV);
     }),
     PersonModule,
     NfcModule,
+    AllergyModule,
   ],
   controllers: [AppController],
   providers: [
