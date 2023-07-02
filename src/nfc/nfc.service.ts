@@ -71,6 +71,18 @@ export class NfcService {
       where: {
         id: user_id,
       },
+      include: {
+        person: {
+          include: {
+            doctors: true,
+            allergies: true,
+            contacts: true,
+            conditions: true,
+            appointment: true,
+            medications: true,
+          },
+        },
+      },
     });
 
     if (!user) {
