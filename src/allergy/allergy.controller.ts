@@ -15,7 +15,7 @@ import { CreateAllergyDto } from './dto/create-allergy.dto';
 import { UpdateAllergyDto } from './dto/update-allergy.dto';
 
 @ApiTags('allergy')
-@RolesAndOwner(Role.DOCTOR)
+@RolesAndOwner(Role.ADMIN)
 @Controller('allergy')
 export class AllergyController {
   constructor(private readonly allergyService: AllergyService) {}
