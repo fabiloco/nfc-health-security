@@ -4,6 +4,7 @@ import { createZodDto } from 'nestjs-zod';
 const updateAallergySchema = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
+  severity: z.string().optional(),
 });
 
 export class UpdateAllergyDto extends createZodDto(updateAallergySchema) {}

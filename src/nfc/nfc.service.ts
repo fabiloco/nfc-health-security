@@ -90,4 +90,57 @@ export class NfcService {
 
     return { user };
   }
+
+  async delete(readNfcDto: ReadNfcDto) {
+    const { nfc_payload, nfc_uid } = readNfcDto;
+
+    const nfc = await this.prisma.nfc.findUnique({
+      where: {
+        id: nfc_payload,
+      },
+    });
+
+    if (!nfc) {
+      throw new HttpException(
+        'There is no NFC with such payload registered',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    const { token, user_id } = nfc;
+
+    const token_decoded = this.jwtService.decode(token) as { payload: string };
+
+    const [nfc_uid_decrypted] = this.decryptPayload(token_decoded.payload);
+
+    if (nfc_uid !== nfc_uid_decrypted) {
+      throw new HttpException(
+        'NFC uid and payload do not match',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: user_id,
+      },
+      include: {
+        person: {
+          include: {
+            allergies: true,
+            contacts: true,
+            conditions: true,
+            medications: true,
+            appointments: true,
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    return { user };
+  }
 }

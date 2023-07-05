@@ -1,9 +1,10 @@
-import { Controller, Post, Body, Param } from '@nestjs/common';
+import { Controller, Post, Body, Param, Delete } from '@nestjs/common';
 
 import { NfcService } from './nfc.service';
 
 import { RegisterNfcDto } from './dto/register-nfc.dto';
 import { ReadNfcDto } from './dto/read-nfc.dto';
+import { DeleteNfcDto } from './dto/delete-nfc.dto';
 
 import { RolesAndOwner } from 'src/auth/roles.decorator';
 
@@ -16,6 +17,11 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @RolesAndOwner(Role.DOCTOR, Role.ADMIN)
 export class NfcController {
   constructor(private readonly nfcService: NfcService) {}
+
+  @Delete('delete/:id')
+  delete(@Param('id') id: string, @Body() deleteNfcDto: DeleteNfcDto) {
+    return this.nfcService.delete(deleteNfcDto);
+  }
 
   @Post('register/:id')
   register(@Param('id') id: string, @Body() registerNfcDto: RegisterNfcDto) {
