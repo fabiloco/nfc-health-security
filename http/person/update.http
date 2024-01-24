@@ -1,11 +1,14 @@
 PATCH http://localhost:3000/person/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4MjY3Mjk1LCJleHAiOjE2OTA4NTkyOTV9.QTm-Uv2r9N16grX_mNT_Zxlz4pLHAvjMDTVJSoniCe0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzA2MTMyNzk3LCJleHAiOjE3MDg3MjQ3OTd9.E2ecz4p-OR8gj9XNLf_K2L4C3hEHEeE0OBAgm1W2jek
 
 {
   "lastname": "Ricardo",
   "phone": "3001231212",
   "sex": "F",
+  "classes": [{
+
+  }]
 }
 
 

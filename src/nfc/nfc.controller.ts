@@ -14,7 +14,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @ApiBearerAuth()
 @ApiTags('nfc')
 @Controller('nfc')
-@RolesAndOwner(Role.DOCTOR, Role.ADMIN)
+@RolesAndOwner(Role.TEACHER, Role.ADMIN)
 export class NfcController {
   constructor(private readonly nfcService: NfcService) {}
 

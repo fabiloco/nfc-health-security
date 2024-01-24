@@ -11,11 +11,8 @@ export class PersonService {
     const person = await this.prisma.person.findFirst({
       where: { user: { id: Number(userId) } },
       include: {
-        appointments: true,
-        contacts: true,
-        allergies: true,
-        conditions: true,
-        medications: true,
+        grades: true,
+        classes: true,
       },
     });
 
@@ -46,7 +43,8 @@ export class PersonService {
       ocupation,
       blood_type,
       marital_status,
-      allergies,
+      grades,
+      classes,
     } = updatePersonDto;
 
     const personWithId = await this.prisma.person.findFirst({
@@ -76,16 +74,16 @@ export class PersonService {
         ocupation,
         blood_type,
         marital_status,
-        allergies: {
-          set: allergies?.map((allergyId) => ({ id: allergyId })),
+        classes: {
+          set: classes?.map((id) => ({ id })),
+        },
+        grades: {
+          set: classes?.map((id) => ({ id })),
         },
       },
       include: {
-        appointments: true,
-        contacts: true,
-        allergies: true,
-        conditions: true,
-        medications: true,
+        classes: true,
+        grades: true,
       },
     });
 

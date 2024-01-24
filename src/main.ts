@@ -11,7 +11,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('NFC Health Security')
     .setDescription(
-      `This API is used to access and store patient medical history.`,
+      `This API is used to access and store students schoolar history.`,
     )
     .setVersion('1.0')
     .addTag('auth')

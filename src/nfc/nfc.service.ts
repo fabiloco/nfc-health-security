@@ -74,11 +74,8 @@ export class NfcService {
       include: {
         person: {
           include: {
-            allergies: true,
-            contacts: true,
-            conditions: true,
-            medications: true,
-            appointments: true,
+            classes: true,
+            grades: true,
           },
         },
       },
@@ -127,11 +124,8 @@ export class NfcService {
       include: {
         person: {
           include: {
-            allergies: true,
-            contacts: true,
-            conditions: true,
-            medications: true,
-            appointments: true,
+            grades: true,
+            classes: true,
           },
         },
       },

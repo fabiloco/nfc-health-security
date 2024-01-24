@@ -2,58 +2,7 @@ import { createZodDto } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
 // import { z } from 'zod';
 
-import { person_sex, person_marital_status, appointment } from '@prisma/client';
-
-const urgency = z.object({});
-
-const appointment = z.object({
-  city: z.string().optional(),
-  reason: z.string().optional(),
-  address: z.string().optional(),
-  hospital: z.string().optional(),
-  severity: z.string().optional(),
-  start_day: z.dateString(),
-  description: z.string().optional(),
-});
-
-const doctor = z.object({
-  professional_license: z.string().optional(),
-  recidency_hospital: z.string().optional(),
-  specialty: z.string().optional(),
-  citas_doctor: z.array(appointment).optional(),
-  doctor_urgency: z.array(urgency).optional(),
-});
-
-const contact = z.object({
-  person_id: z.number().optional(),
-});
-
-const condition = z.object({
-  name: z.string().optional(),
-  description: z.string().optional(),
-  diagnosis_date: z.dateString().optional(),
-});
-
-const updateMedication = z.object({
-  id: z.number().optional(),
-  name: z.string().optional(),
-  description: z.string().optional(),
-  dosage: z.string().optional(),
-  reason: z.string().optional(),
-  frecuency: z.string().optional(),
-  end_date: z.dateString().optional(),
-  start_date: z.dateString().optional(),
-});
-
-const createMedication = z.object({
-  name: z.string().optional(),
-  description: z.string().optional(),
-  dosage: z.string().optional(),
-  reason: z.string().optional(),
-  frecuency: z.string().optional(),
-  end_date: z.dateString().optional(),
-  start_date: z.dateString().optional(),
-});
+import { person_sex, person_marital_status } from '@prisma/client';
 
 const updatePersonSchema = z.object({
   dni: z.string().optional(),
@@ -73,11 +22,8 @@ const updatePersonSchema = z.object({
   birthday: z.dateString().nullish().optional(),
   user_id: z.number().int().optional(),
 
-  appointments: z.array(z.number()).optional(),
-  contacts: z.array(contact).optional(),
-  allergies: z.array(z.number()).optional(),
-  conditions: z.array(z.number()).optional(),
-  medications: z.array(z.number()).optional(),
+  classes: z.array(z.number()).optional(),
+  grades: z.array(z.number()).optional(),
 });
 
 // class is required for using DTO as a type
