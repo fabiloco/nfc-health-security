@@ -11,18 +11,12 @@ model user {
   id         Int       @id @default(autoincrement())
   email      String    @unique
   password   String
-  person     person?
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   deleted_at DateTime? @db.Timestamp(0)
-  role       role      @default(PATIENT)
+  role       role      @default(STUDENT)
   nfc        nfc[]
-}
-
-enum role {
-  ADMIN
-  PATIENT
-  DOCTOR
+  person     person?
 }
 
 model person {
@@ -42,117 +36,63 @@ model person {
   sisben         String?
   estrato        String?
   birthday       DateTime?              @db.Timestamp(0)
+  created_at     DateTime               @default(now())
+  updated_at     DateTime               @updatedAt
   deleted_at     DateTime?              @db.Timestamp(0)
-  allergies      allergie[]
-  appointments   appointment[]
-  contacts       contact[]
-  conditions     condition[]
-  medications    medication[]
-
-  user    user @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user_id Int  @unique
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  doctor     doctor?
+  user_id        Int                    @unique
+  classes        Class[]
+  grades         grade[]
+  user           user                   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model contact {
-  id         Int       @id @default(autoincrement())
-  person     person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id  Int
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  deleted_at DateTime? @db.Timestamp(0)
+model course {
+  id         Int     @id @default(autoincrement())
+  courseName String
+  instructor String
+  classes    Class[]
+}
+
+model Class {
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  location String
+  duration Int
+  courseId Int
+  personId Int
+  course   course   @relation(fields: [courseId], references: [id])
+  person   person   @relation(fields: [personId], references: [id])
+  grades   grade[]
+
+  @@index([courseId], map: "Class_courseId_fkey")
+  @@index([personId], map: "Class_personId_fkey")
+}
+
+model grade {
+  id             Int    @id @default(autoincrement())
+  grade          Int
+  assignmentName String
+  personId       Int
+  classId        Int
+  class          Class  @relation(fields: [classId], references: [id])
+  person         person @relation(fields: [personId], references: [id])
+
+  @@index([classId], map: "grade_classId_fkey")
+  @@index([personId], map: "grade_personId_fkey")
 }
 
 model nfc {
   id      Int    @id @default(autoincrement())
   token   String @db.LongText
-  user    user   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   user_id Int
+  user    user   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([user_id], map: "nfc_user_id_fkey")
 }
 
-model allergie {
-  id          Int      @id @default(autoincrement())
-  name        String
-  severity    Int @default(0)
-  description String   @db.LongText
-  persons     person[]
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-}
-
-model condition {
-  id             Int      @id @default(autoincrement())
-  name           String
-  description    String   @db.LongText
-  diagnosis_date DateTime
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
-  persons        person[]
-}
-
-model medication {
-  id          Int      @id @default(autoincrement())
-  persons     person[]
-  name        String
-  description String   @db.LongText
-  reason      String   @db.LongText
-  dosage      String
-  frecuency   String
-  start_date  DateTime
-  end_date    DateTime
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-}
-
-model appointment {
-  id          Int       @id @default(autoincrement())
-  start_day   DateTime? @db.Timestamp(0)
-  reason      String    @db.Text
-  description String    @db.LongText
-  hospital    String
-  address     String
-  severity    String
-  city        String
-  person      person    @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id   Int
-  doctors     doctor[]
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
-}
-
-model doctor {
-  id                   Int           @id @default(autoincrement())
-  professional_license String
-  recidency_hospital   String
-  specialty            String
-  appointments         appointment[]
-  urgencies            urgency[]
-
-  person    person @relation(fields: [person_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  person_id Int    @unique
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model urgency {
-  id          Int       @id @default(autoincrement())
-  start_day   DateTime? @db.Timestamp(0)
-  end_day     DateTime? @db.Timestamp(0)
-  reason      String    @db.Text
-  description String    @db.LongText
-  hospital    String
-  address     String
-  severity    String
-  city        String
-  person_id   Int
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
-  doctor      doctor?   @relation(fields: [doctorId], references: [id])
-  doctorId    Int?
+enum role {
+  ADMIN
+  STUDENT
+  TEACHER
 }
 
 enum person_sex {
