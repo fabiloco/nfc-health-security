@@ -1,8 +1,0 @@
-POST http://localhost:3000/allergy/1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4MjY3Mjk1LCJleHAiOjE2OTA4NTkyOTV9.QTm-Uv2r9N16grX_mNT_Zxlz4pLHAvjMDTVJSoniCe0
-
-{
-  "name": "alergia al pelo de gato",
-  "description": "ve un gato y le da un yeyo"
-}

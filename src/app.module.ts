@@ -12,6 +12,9 @@ import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { PersonModule } from './person/person.module';
 import { NfcModule } from './nfc/nfc.module';
+import { ClassModule } from './class/class.module';
+import { CourseModule } from './course/course.module';
+import { GradeModule } from './grade/grade.module';
 
 console.log(process.env.NODE_ENV);
 
@@ -25,6 +28,9 @@ console.log(process.env.NODE_ENV);
     }),
     PersonModule,
     NfcModule,
+    ClassModule,
+    CourseModule,
+    GradeModule,
   ],
   controllers: [AppController],
   providers: [

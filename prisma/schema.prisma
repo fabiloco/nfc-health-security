@@ -49,7 +49,7 @@ model course {
   id         Int     @id @default(autoincrement())
   courseName String
   instructor String
-  classes    Class[]
+  Class      Class[]
 }
 
 model Class {
