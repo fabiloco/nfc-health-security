@@ -1,0 +1,11 @@
+POST http://localhost:3000/class
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4MjY3Mjk1LCJleHAiOjE2OTA4NTkyOTV9.QTm-Uv2r9N16grX_mNT_Zxlz4pLHAvjMDTVJSoniCe0
+
+{
+  "date": "2024-01-24T17:31:05-05:00",
+  "location": "test",
+  "duration": 1,
+  "course": 1,
+  "person": 1
+}
