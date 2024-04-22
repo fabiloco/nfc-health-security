@@ -21,7 +21,8 @@ console.log(process.env.NODE_ENV);
     AuthModule,
     UserModule,
     ConfigModule.forRoot({
-      envFilePath: process.env.NODE_ENV === 'prod' ? '.env' : '.env.dev',
+      // envFilePath: process.env.NODE_ENV === 'prod' ? '.env' : '.env.dev',
+      envFilePath: '.env',
       isGlobal: true,
     }),
     PersonModule,
